@@ -107,11 +107,12 @@ def main(args):
             resolve(statuspage, model, component_status, open_incident)
         else:
             impact = 'none'
-            message = "{} results from model run based on analysis of {} is not yet published. Normally we would expect it by now. Please use earlier forecast.".format(model.NAME, model.bulletin.strftime('%Y-%m-%d %H %Z'))
+            message = "{} results from model run based on analysis of {} is not yet published. Normally we would expect it by now. Please use earlier forecast.".format(model.NAME, required_model.bulletin.strftime('%Y-%m-%d %H %Z'))
             if required_model.is_delayed(now) or required_model.prev().bulletin > most_recent_bulletin[model].bulletin:
                 component_status = 'degraded_performance'
                 impact = 'minor'
-                message = "{} results from model run based on analysis of {} is not yet published. This is a significant delay and we are sorry about any inconvenience. Please use earlier forecast.".format(model.NAME, model.bulletin.strftime('%Y-%m-%d %H %Z'))
+                message = "{} results from model run based on analysis of {} is not yet published. This is a significant delay and we are sorry about any inconvenience. Please use earlier forecast.".format(model.NAME, required_model.bulletin.strftime('%Y-%m-%d %H %Z'))
+            message = message.replace('UTC+00:00', 'UTC')
 
             if open_incident:
                 if not statuspage.status(model.STATUSPAGE_ID) == component_status:
