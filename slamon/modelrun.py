@@ -93,21 +93,21 @@ class MEPS(ModelRun):
 
 class MEPSdet(MEPS):
     NAME = 'MEPS deterministic'
-    EXPECTED = datetime.timedelta(hours=2, minutes=20)  # Statkraft SLA
+    EXPECTED = datetime.timedelta(hours=2, minutes=20)
     PATTERN = 'meps_det_extracted_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = 'bcsflmrp5rgk'
 
 
 class MEPSdetpp(MEPS):
     NAME = 'MEPS deterministic post processed'
-    EXPECTED = datetime.timedelta(hours=2, minutes=25)  # Statkraft SLA
+    EXPECTED = datetime.timedelta(hours=2, minutes=25)
     PATTERN = 'meps_det_pp_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = 'hdt6qj6f7zv5'
 
 
 class MEPSens(MEPS):
     NAME = 'MEPS ensemble'
-    EXPECTED = datetime.timedelta(hours=4, minutes=45)  # Statkraft SLA
+    EXPECTED = datetime.timedelta(hours=5, minutes=10)
     PATTERN = 'meps_allmembers_extracted_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = '6bb2dq9t7vx9'
 
@@ -120,14 +120,14 @@ class AromeArctic(ModelRun):
 
 class AAdet(AromeArctic):
     NAME = 'Arome Arctic deterministic'
-    EXPECTED = datetime.timedelta(hours=3, minutes=15)  # eivinds@met.no
+    EXPECTED = datetime.timedelta(hours=3, minutes=15)
     PATTERN = 'arome_arctic_extracted_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = '5w7hh6w1f3fr'
 
 
 class AAdetpp(AromeArctic):
     NAME = 'Arome Arctic deterministic post processed'
-    EXPECTED = datetime.timedelta(hours=3, minutes=15)  # eivinds@met.no
+    EXPECTED = datetime.timedelta(hours=3, minutes=15)
     PATTERN = 'arome_arctic_pp_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = 'n1wsnn6gr8p9'
 
