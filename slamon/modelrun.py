@@ -23,6 +23,7 @@ class ModelRun:
     PATTERN = 'filename_%Y%m%dT%HZ.nc'  # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
     URL = 'http://thredds/catalog.xml'
     STATUSPAGE_ID = None
+    INIT_HOURS = [18, 12, 6, 0]
 
     def __init__(self):
         self.bulletin = False
@@ -44,7 +45,7 @@ class ModelRun:
         """
         assert datetime_.tzinfo is not None
         utctime = datetime_.astimezone(datetime.timezone.utc) - cls.EXPECTED - cls.WARNING_AFTER # ModelRun is not required immedeately after init...
-        init_hours = [18, 12, 6, 0]
+        init_hours = cls.INIT_HOURS
         init_hours.sort(reverse=True)  # The following depends on reverse sorted init_hours, i.e. last first
         obj = cls()
         for prev_hour in init_hours:
@@ -107,7 +108,7 @@ class MEPSdetpp(MEPS):
 
 class MEPSens(MEPS):
     NAME = 'MEPS ensemble'
-    EXPECTED = datetime.timedelta(hours=4, minutes=45)  # Statkraft SLA
+    EXPECTED = datetime.timedelta(hours=5, minutes=10)  # Statkraft SLA, arkivref: 2017/1506-14
     PATTERN = 'meps_allmembers_extracted_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = '6bb2dq9t7vx9'
 
@@ -120,14 +121,14 @@ class AromeArctic(ModelRun):
 
 class AAdet(AromeArctic):
     NAME = 'Arome Arctic deterministic'
-    EXPECTED = datetime.timedelta(hours=3, minutes=15)  # eivinds@met.no
+    EXPECTED = datetime.timedelta(hours=3, minutes=30)  # eivinds@met.no
     PATTERN = 'arome_arctic_extracted_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = '5w7hh6w1f3fr'
 
 
 class AAdetpp(AromeArctic):
     NAME = 'Arome Arctic deterministic post processed'
-    EXPECTED = datetime.timedelta(hours=3, minutes=15)  # eivinds@met.no
+    EXPECTED = datetime.timedelta(hours=3, minutes=30)  # eivinds@met.no
     PATTERN = 'arome_arctic_pp_2_5km_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = 'n1wsnn6gr8p9'
 
