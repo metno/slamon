@@ -23,7 +23,7 @@ class ModelRun:
     PATTERN = 'filename_%Y%m%dT%HZ.nc'  # https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
     URL = 'http://thredds/catalog.xml'
     STATUSPAGE_ID = None
-    INIT_HOURS = [18, 12, 6, 0]
+    INIT_HOURS = [0, 6, 12, 18]
 
     def __init__(self):
         self.bulletin = False
@@ -45,7 +45,7 @@ class ModelRun:
         """
         assert datetime_.tzinfo is not None
         utctime = datetime_.astimezone(datetime.timezone.utc) - cls.EXPECTED - cls.WARNING_AFTER # ModelRun is not required immedeately after init...
-        init_hours = cls.INIT_HOURS
+        init_hours = list(cls.INIT_HOURS)
         init_hours.sort(reverse=True)  # The following depends on reverse sorted init_hours, i.e. last first
         obj = cls()
         for prev_hour in init_hours:
@@ -89,27 +89,29 @@ class ModelRun:
 class MEPS(ModelRun):
     """ Abstract class for the MEPS family of model runs
     """
-    URL = 'https://thredds.met.no/thredds/catalog/meps25files/catalog.xml'
-
+    URL = 'https://thredds.met.no/thredds/catalog/mepslatest/catalog.xml'
+    INIT_HOURS = range(0, 24, 3)  # Every 3rd hour
 
 class MEPSdet(MEPS):
     NAME = 'MEPS deterministic'
     EXPECTED = datetime.timedelta(hours=2, minutes=20)  # Statkraft SLA
-    PATTERN = 'meps_det_extracted_2_5km_%Y%m%dT%HZ.nc'
+    PATTERN = 'meps_det_2_5km_%Y%m%dT%HZ.ncml'
     STATUSPAGE_ID = 'bcsflmrp5rgk'
 
 
 class MEPSdetpp(MEPS):
     NAME = 'MEPS deterministic post processed'
     EXPECTED = datetime.timedelta(hours=2, minutes=25)  # Statkraft SLA
-    PATTERN = 'meps_det_pp_2_5km_%Y%m%dT%HZ.nc'
+    URL = 'https://thredds.met.no/thredds/catalog/metpplatest/catalog.xml'
+    PATTERN = 'met_forecast_1_0km_nordic_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = 'hdt6qj6f7zv5'
+    INIT_HOURS = range(0, 24)  # Every hour
 
 
 class MEPSens(MEPS):
     NAME = 'MEPS ensemble'
     EXPECTED = datetime.timedelta(hours=5, minutes=10)  # Statkraft SLA, arkivref: 2017/1506-14
-    PATTERN = 'meps_allmembers_extracted_2_5km_%Y%m%dT%HZ.nc'
+    PATTERN = 'meps_lagged_6_h_subset_2_5km_%Y%m%dT%HZ.ncml'
     STATUSPAGE_ID = '6bb2dq9t7vx9'
 
 
