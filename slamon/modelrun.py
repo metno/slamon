@@ -94,14 +94,14 @@ class MEPS(ModelRun):
 
 class MEPSdet(MEPS):
     NAME = 'MEPS deterministic'
-    EXPECTED = datetime.timedelta(hours=2, minutes=20)  # Statkraft SLA
+    EXPECTED = datetime.timedelta(hours=3, minutes=00)  # Statkraft SLA 03:30, Statnett SLA 03:00
     PATTERN = 'meps_det_2_5km_%Y%m%dT%HZ.ncml'
     STATUSPAGE_ID = 'bcsflmrp5rgk'
 
 
 class MEPSdetpp(MEPS):
     NAME = 'MEPS deterministic post processed'
-    EXPECTED = datetime.timedelta(hours=2, minutes=25)  # Statkraft SLA
+    EXPECTED = datetime.timedelta(hours=0, minutes=45)  # Statkraft SLA 02:25, Statnett SLA 00:45
     URL = 'https://thredds.met.no/thredds/catalog/metpplatest/catalog.xml'
     PATTERN = 'met_forecast_1_0km_nordic_%Y%m%dT%HZ.nc'
     STATUSPAGE_ID = 'hdt6qj6f7zv5'
